@@ -46,6 +46,12 @@ export default function SetlistPage() {
 
   // function to handle adding a new song
   const addSong = () => {
+
+    // handle edge case: what if all fields are empty? 
+    if (!title || !artist || !duration) {
+      alert('Please fill everything out')
+      return; // stop here 
+    }
     // create new song object
     const newSong = {
       id: Date.now(),
@@ -67,8 +73,6 @@ export default function SetlistPage() {
     setArtist("");
     setDuration("");
   };
-
-  // function to handle updating a song
 
   // function to handle deleting a song
 
