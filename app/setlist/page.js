@@ -75,6 +75,11 @@ export default function SetlistPage() {
   };
 
   // function to handle deleting a song
+  const deleteSong = (id) => {
+    
+    setSongs(songs.filter(song=>song.id != id));
+
+  }
 
   return (
     <>
@@ -131,7 +136,7 @@ export default function SetlistPage() {
                 <Td>
                   <ButtonGroup spacing={2}>
                     <Button colorScheme="blue" size="sm">Edit</Button>
-                    <Button colorScheme="red" size="sm">Delete</Button>
+                    <Button colorScheme="red" size="sm" onClick={()=>deleteSong(song.id)}>Delete</Button>
                   </ButtonGroup>
                 </Td>
               </Tr>
