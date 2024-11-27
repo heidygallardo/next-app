@@ -20,6 +20,7 @@ import {
   Button,
   Center,
   Heading,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { Container } from "@chakra-ui/react";
 import { useState } from "react";
@@ -61,8 +62,8 @@ export default function SetlistPage() {
     // and newSong added to the end of new array
     setSongs([...songs, newSong]);
 
-    // clear input fields 
-    setTitle(""); 
+    // clear input fields
+    setTitle("");
     setArtist("");
     setDuration("");
   };
@@ -81,10 +82,25 @@ export default function SetlistPage() {
 
       <Center>
         <Stack spacing={3}>
-          <Input placeholder="Song Title" size="md" value={title} onChange={(e) => setTitle(e.target.value)} />
-          <Input placeholder="Artist" size="md" value={artist} onChange={(e) => setArtist(e.target.value)} />
-          <Input placeholder="Duration 00:00" size="md" value={duration} onChange={(e) => setDuration(e.target.value)}/>
-          <Button colorScheme="blue" onClick={addSong}>
+          <Input
+            placeholder="Song Title"
+            size="md"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Input
+            placeholder="Artist"
+            size="md"
+            value={artist}
+            onChange={(e) => setArtist(e.target.value)}
+          />
+          <Input
+            placeholder="Duration 00:00"
+            size="md"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+          />
+          <Button colorScheme="green" onClick={addSong}>
             Add Song
           </Button>
         </Stack>
@@ -99,6 +115,7 @@ export default function SetlistPage() {
               <Th>Title</Th>
               <Th>Artist</Th>
               <Th>Duration</Th>
+              <Th>Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -108,7 +125,10 @@ export default function SetlistPage() {
                 <Td>{song.artist}</Td>
                 <Td>{song.duration}</Td>
                 <Td>
-                  <Button colorScheme="red">Delete</Button>
+                  <ButtonGroup spacing={2}>
+                    <Button colorScheme="blue" size="sm">Edit</Button>
+                    <Button colorScheme="red" size="sm">Delete</Button>
+                  </ButtonGroup>
                 </Td>
               </Tr>
             ))}
