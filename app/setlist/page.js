@@ -1,16 +1,33 @@
 // focus: CRUD, REACT hooks
-// create: add new data (adding a new song to setlist) 
+// create: add new data (adding a new song to setlist)
 // read: view or retrieve data (displaying the list of songs)
 // update: modify existing data (editing song title)
 // delete: remove data (deleting song from setlist)
+"use client";
 
-import { Thead, Tr, Th, Tbody, Td, Table, Divider, Text, Box, Stack, Input, Button, Center, Heading } from "@chakra-ui/react";
+import {
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Table,
+  Divider,
+  Text,
+  Box,
+  Stack,
+  Input,
+  Button,
+  Center,
+  Heading,
+} from "@chakra-ui/react";
 import { Container } from "@chakra-ui/react";
+import { useState } from "react";
 
 // hardcoded data for now
 // array of objects
 // each object has id, title, artist, duration
-const songsDB = [
+const initialSongs = [
   { id: 1, title: "Shape of You", artist: "Ed Sheeran", duration: "4:24" },
   { id: 2, title: "Blinding Lights", artist: "The Weeknd", duration: "3:20" },
   { id: 3, title: "Rolling in the Deep", artist: "Adele", duration: "3:48" },
@@ -18,17 +35,41 @@ const songsDB = [
 
 // define setlist page
 export default function SetlistPage() {
+  // define the state of songs
+  const [songs, setSongs] = useState(initialSongs);
 
-  // define the state of songs 
-  // define the state for title input field value 
-  // define the state for artist input field value 
-  // define the state for duration input field value 
-  
-  // function to handle adding a song 
+  // States for input fields
+  const [title, setTitle] = useState("");
+  const [artist, setArtist] = useState("");
+  const [duration, setDuration] = useState("");
 
-  // function to handle updating a song 
+  // function to handle adding a new song
+  const addSong = () => {
+    // create new song object
+    const newSong = {
+      id: Date.now(),
+      title,
+      artist,
+      duration,
+    };
 
-  // function to handle deleting a song 
+    // update songs state by adding the new song
+    // SPEAD OPERATION (...) takes all elements of an array and
+    // "spreads" them into a new array or object
+
+    // ...songs --> creates shallow copy of the existing songs array --> original array remains unchanged
+    // and newSong added to the end of new array
+    setSongs([...songs, newSong]);
+
+    // clear input fields 
+    setTitle(""); 
+    setArtist("");
+    setDuration("");
+  };
+
+  // function to handle updating a song
+
+  // function to handle deleting a song
 
   return (
     <>
@@ -40,16 +81,16 @@ export default function SetlistPage() {
 
       <Center>
         <Stack spacing={3}>
-          <Input placeholder="Song Title" size="md" />
-          <Input placeholder="Artist" size="md" />
-          <Input placeholder="Duration 00:00" size="md"/>
-          <Button colorScheme="blue">Add Song</Button>
-
+          <Input placeholder="Song Title" size="md" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <Input placeholder="Artist" size="md" value={artist} onChange={(e) => setArtist(e.target.value)} />
+          <Input placeholder="Duration 00:00" size="md" value={duration} onChange={(e) => setDuration(e.target.value)}/>
+          <Button colorScheme="blue" onClick={addSong}>
+            Add Song
+          </Button>
         </Stack>
       </Center>
       <Container>
         <Box mt={12} b={4}>
-         
           <Divider />
         </Box>
         <Table variant="simple">
@@ -61,20 +102,19 @@ export default function SetlistPage() {
             </Tr>
           </Thead>
           <Tbody>
-            {songsDB.map((song) => (
+            {songs.map((song) => (
               <Tr key={song.id}>
                 <Td>{song.title}</Td>
                 <Td>{song.artist}</Td>
                 <Td>{song.duration}</Td>
-                <Td><Button colorScheme="red">Delete</Button></Td>
+                <Td>
+                  <Button colorScheme="red">Delete</Button>
+                </Td>
               </Tr>
             ))}
           </Tbody>
         </Table>
       </Container>
-
-      
-
     </>
   );
 }
